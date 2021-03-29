@@ -15,7 +15,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.urls.conf import include
+from buttoncount import views
+from rest_framework import routers
 
+router = routers.DefaultRouter()
+router.register(r'buttoncounts', views.ButtonView, 'buttoncount')
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/', include(router.urls))
 ]
