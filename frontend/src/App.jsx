@@ -38,7 +38,7 @@ class App extends React.PureComponent {
             </Col>
           </Row>
 
-          <Row style={{ marginBottom: "100px", marginTop: "30px" }}>
+          <Row style={{ marginBottom: "100px", marginTop: "30px" , width:"auto"}}>
             <Col md={4}>
               <h3>Made by Joseph Whiteaker</h3>
             </Col>
@@ -120,7 +120,7 @@ class App extends React.PureComponent {
           <Col md={6}>
           <Card
             color="secondary"
-            style={{ width:"200%"}}
+            style={{ width:"auto", marginTop:"20px"}}
           >
             <CardTitle style={{height:"inherit"}}>
               <h1 className="text-light">Button Count</h1>
