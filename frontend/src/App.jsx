@@ -4,7 +4,11 @@ import "./App.css"
 import { Row, Button, Col } from "reactstrap"
 import { connect } from "react-redux"
 import { ButtonAction } from "./Redux/Actions/ButtonAction"
+import {store } from "./Redux/Stores/store"
+
+
 class App extends React.PureComponent {
+
   constructor(props) {
     super(props)
     this.state = {
@@ -17,11 +21,6 @@ class App extends React.PureComponent {
     this.HandleClick = this.HandleClick.bind(this)
   }
 
-  updateCycle = () => {
-    this.renderList()
-    this.RefreshValue()
-    this.props.ButtonProp(this.state.Button)
-  }
 
   componentDidMount() {
     this.updateCycle()
@@ -29,29 +28,84 @@ class App extends React.PureComponent {
   
   componentDidUpdate() {
     this.updateCycle()
+    
   }
 
-  renderList() {
+  render() {
+    return (
+      <div className="App">
+        <header className="App-header">
+    
+          <Row style={{marginBottom:"100px"}}> 
+            <Col>
+              <h1 className="text-warning"> Button Counter </h1>
+            </Col>
+          </Row>
+
+        
+          <Row style={{ marginBottom: "100px" }}>
+            <Col>
+              <h1 className="text-primary"> React </h1>
+            </Col>
+            <Col>
+              <h1 className="text-light"> + </h1>
+            </Col>
+            <Col>
+              <h1 className="text-danger"> Redux </h1>
+            </Col>
+            <Col>
+              <h1 className="text-light"> + </h1>
+            </Col>
+            <Col>
+              <h1 className="text-success"> Django </h1>
+            </Col>
+            </Row> 
+              {this.renderList()}
+            
+        <div className="section">
+      
+        </div>
+        </header>
+      </div>
+    )
+  }
+
+  updateCycle = () => {
+    console.log(store.getState())
+    console.log("store state ^ ")
+    this.renderList()
+    this.RefreshValue()
+    this.props.ButtonProp(this.state.Button)
+  }
+
+   renderList() {
     return this.state.Button.map((item) => (
       <>
         <Row key={item.id} id="list">
           <Col>
             <Button
+            color="primary"
               onClick={() => {
                 this.HandleClick(item)
               }}
-              className="text-info"
+              className="text-dark"
+              style={{width:"100%"}}
             >
               {" "}
               Increment{" "}
             </Button>
           </Col>
-          <Col>
+          <Col style={{width:"auto"}}>
             <Button
+
+              color="primary"
+              className="text-dark"
               onClick={() => {
                 this.HandleReset(item)
               }}
-              className="text-info"
+
+              style={{width:"100%"}}
+            
             >
               Reset{" "}
             </Button>
@@ -61,7 +115,7 @@ class App extends React.PureComponent {
           <br />
         </Row>
         <Row>
-          <h1 className="text-danger">Item Count = {item.count}</h1>
+          <h1 className="text-light">Item Count = {item.count}</h1>
         </Row>
       </>
     ))
@@ -121,31 +175,14 @@ class App extends React.PureComponent {
     )
 
     this.RefreshValue()
-    // window.location.reload()
   }
 
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          {this.renderList()}
 
-          <Row style={{ marginTop: "100px" }}>
-            <Col>
-              <h1 className="text-success"> React </h1>
-            </Col>
-            <Col>
-              <h1 className="text-warning"> & </h1>
-            </Col>
-            <Col>
-              <h1 className="text-info"> Redux </h1>
-            </Col>
-          </Row>
-        </header>
-      </div>
-    )
-  }
 }
+
+
+
+
 
 function mapStateToProps(props, state) {
   return {
