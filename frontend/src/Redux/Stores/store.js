@@ -19,6 +19,6 @@ export const initalState = {
 
 export const store = createStore(allReducers, initalState)
 
-console.log(store.getState(), ()=>{
+console.log(store.getState(), () => {
   console.log("^ store state ")
 })

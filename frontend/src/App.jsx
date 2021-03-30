@@ -1,14 +1,12 @@
 import React from "react"
 import axios from "axios"
 import "./App.css"
-import { Row, Button, Col } from "reactstrap"
+import { Row, Button, Col, CardBody, Card, CardTitle, Container } from "reactstrap"
 import { connect } from "react-redux"
 import { ButtonAction } from "./Redux/Actions/ButtonAction"
-import {store } from "./Redux/Stores/store"
-
-
+import { store } from "./Redux/Stores/store"
+import classnames from "classnames" 
 class App extends React.PureComponent {
-
   constructor(props) {
     super(props)
     this.state = {
@@ -21,29 +19,33 @@ class App extends React.PureComponent {
     this.HandleClick = this.HandleClick.bind(this)
   }
 
-
   componentDidMount() {
     this.updateCycle()
   }
-  
+
   componentDidUpdate() {
     this.updateCycle()
-    
   }
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
-    
-          <Row style={{marginBottom:"100px"}}> 
+          <Row style={{ marginBottom: "100px" }}>
             <Col>
               <h1 className="text-warning"> Button Counter </h1>
+              <hr className="secondary"/> 
             </Col>
           </Row>
 
+          <Row style={{ marginBottom: "100px", marginTop: "30px" }}>
+            <Col md={4}>
+              <h3>Made by Joseph Whiteaker</h3>
+            </Col>
+            <Col md={8}>
+            <Container fluid>
+            <Row > 
         
-          <Row style={{ marginBottom: "100px" }}>
             <Col>
               <h1 className="text-primary"> React </h1>
             </Col>
@@ -59,12 +61,16 @@ class App extends React.PureComponent {
             <Col>
               <h1 className="text-success"> Django </h1>
             </Col>
-            </Row> 
-              {this.renderList()}
-            
-        <div className="section">
-      
-        </div>
+          
+            </Row>
+            </Container>
+            </Col> 
+       
+          </Row>
+
+          {this.renderList()}
+
+          <div className="section"></div>
         </header>
       </div>
     )
@@ -78,45 +84,58 @@ class App extends React.PureComponent {
     this.props.ButtonProp(this.state.Button)
   }
 
-   renderList() {
+  renderList() {
     return this.state.Button.map((item) => (
       <>
         <Row key={item.id} id="list">
-          <Col>
+          <Col style={{verticalAlign:"middle"}}>
+            
+            <Row>
             <Button
-            color="primary"
+              color="primary"
               onClick={() => {
                 this.HandleClick(item)
               }}
               className="text-dark"
-              style={{width:"100%"}}
+              style={{ width: "100%", height:"auto" ,padding:"20px"}}
             >
               {" "}
               Increment{" "}
-            </Button>
+            </Button> 
+            </Row>
+            
           </Col>
-          <Col style={{width:"auto"}}>
+          <Col style={{ width: "auto" }}>
             <Button
-
               color="primary"
               className="text-dark"
               onClick={() => {
                 this.HandleReset(item)
               }}
-
-              style={{width:"100%"}}
-            
+              style={{ width: "100%", height:"auto" ,padding:"20px"}}
             >
               Reset{" "}
             </Button>
           </Col>
+          <Col md={6}>
+          <Card
+            color="secondary"
+            style={{ width:"200%"}}
+          >
+            <CardTitle style={{height:"inherit"}}>
+              <h1 className="text-light">Button Count</h1>
+              <hr />
+            </CardTitle>
+            <CardBody className="text-light" >
+              <h5 >
+                Item Count = {item.count} 
+              </h5>
+            
+            </CardBody>
+          </Card> 
+          </Col> 
         </Row>
-        <Row>
-          <br />
-        </Row>
-        <Row>
-          <h1 className="text-light">Item Count = {item.count}</h1>
-        </Row>
+      
       </>
     ))
   }
@@ -176,13 +195,7 @@ class App extends React.PureComponent {
 
     this.RefreshValue()
   }
-
-
 }
-
-
-
-
 
 function mapStateToProps(props, state) {
   return {
