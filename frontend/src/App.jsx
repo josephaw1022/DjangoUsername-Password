@@ -2,7 +2,8 @@ import React from "react"
 import axios from "axios"
 import "./App.css"
 import { Row, Button, Col } from "reactstrap"
-
+import {connect} from "react-redux" 
+import {ButtonAction} from "./Redux/Actions/ButtonAction";
 class App extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -12,15 +13,26 @@ class App extends React.PureComponent {
         count: 0,
         id: " ",
       }
-    
     }
     this.HandleClick = this.HandleClick.bind(this)
+    
   }
 
   componentDidMount() {
+    
+    this.renderList()
+    this.RefreshValue()
+    this.props.ButtonProp(this.state.Button)
+  }
+
+  componentDidUpdate(){
     this.RefreshValue()
     this.renderList()
+    this.props.ButtonProp(this.state.Button) 
+    
   }
+
+  
 
   renderList() {
     return this.state.Button.map((item) => (
@@ -67,30 +79,33 @@ class App extends React.PureComponent {
       this.setState((state) => ({ Button: data }))
       this.renderList()
     }
+    this.props.ButtonProp(this.state.Button)
   }
 
   HandleReset(item) {
     this.setState(
       {
-        count: 0,
         ActiveButton: item,
       },
       () => {
         let tempObject = this.state.ActiveButton
         tempObject.count = 0
-        this.setState(
-          (state) => ({ ActiveButton: tempObject }),
-          () => {
+        this.setState({ ActiveButton: tempObject }, () => {
             axios.put(
               `http://localhost:8000/api/buttoncounts/${this.state.ActiveButton.id}/`,
               tempObject
             )
+            .then(this.RefreshValue())
+            .then(this.renderList())
           }
         )
       }
     )
-    window.location.reload()
+    // window.location.reload()
+    this.props.ButtonProp(this.state.Button)
   }
+
+
 
   HandleClick(item) {
     this.setState(
@@ -111,15 +126,45 @@ class App extends React.PureComponent {
     )
 
     this.RefreshValue()
-    window.location.reload()
+    // window.location.reload()
   }
+
+  
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">{this.renderList()}</header>
+        <header className="App-header">
+          {this.renderList()}
+
+          <Row style={{marginTop:"100px"}}>
+            <Col>
+            <h1 className="text-success"> React </h1>
+            </Col>
+            <Col>
+              <h1 className="text-warning"> & </h1>
+            </Col>
+            <Col>
+            <h1 className="text-info"> Redux </h1> 
+            </Col>
+          </Row>
+          
+          </header>
       </div>
     )
   }
 }
-export default App
+
+
+function mapStateToProps(props,state) {
+  return {
+    DefaultValue: props.DefaultValue + " " + state.NewButton
+  }
+} 
+
+
+const mapActionsToProps = {
+  ButtonProp: ButtonAction
+};
+
+export default connect(mapStateToProps, mapActionsToProps)(App)
