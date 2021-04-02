@@ -14,10 +14,11 @@ const allReducers = combineReducers({
 })
 
 export const initalState = {
-  ButtonValue: getValue(),
+  ButtonValue: [],
+
 }
 
-export const store = createStore(allReducers, initalState)
+export const store = createStore(allReducers)
 
 console.log(store.getState(), () => {
   console.log("^ store state ")

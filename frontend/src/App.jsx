@@ -4,8 +4,8 @@ import "./App.css"
 import { Row, Button, Col, CardBody, Card, CardTitle, Container } from "reactstrap"
 import { connect } from "react-redux"
 import { ButtonAction } from "./Redux/Actions/ButtonAction"
-import { store } from "./Redux/Stores/store"
-import classnames from "classnames" 
+
+
 class App extends React.PureComponent {
   constructor(props) {
     super(props)
@@ -15,15 +15,21 @@ class App extends React.PureComponent {
         count: 0,
         id: " ",
       },
+      count:0 
     }
     this.HandleClick = this.HandleClick.bind(this)
+
   }
 
   componentDidMount() {
+    console.log(" didMount props VV")
+    console.log(this.props.ButtonValue)
     this.updateCycle()
   }
 
   componentDidUpdate() {
+    console.log("didUpdate props VV")
+    console.log(this.props.ButtonValue)
     this.updateCycle()
   }
 
@@ -77,11 +83,11 @@ class App extends React.PureComponent {
   }
 
   updateCycle = () => {
-    console.log(store.getState())
-    console.log("store state ^ ")
-    this.renderList()
     this.RefreshValue()
+    this.renderList()
     this.props.ButtonProp(this.state.Button)
+  
+  
   }
 
   renderList() {
@@ -105,7 +111,7 @@ class App extends React.PureComponent {
             </Row>
             
           </Col>
-          <Col style={{ width: "auto" }}>
+          <Col >
             <Button
               color="primary"
               className="text-dark"
@@ -117,22 +123,10 @@ class App extends React.PureComponent {
               Reset{" "}
             </Button>
           </Col>
-          <Col md={6}>
-          <Card
-            color="secondary"
-            style={{ width:"auto", marginTop:"20px"}}
-          >
-            <CardTitle style={{height:"inherit"}}>
-              <h1 className="text-light">Button Count</h1>
-              <hr />
-            </CardTitle>
-            <CardBody className="text-light" >
-              <h5 >
-                Item Count = {item.count} 
-              </h5>
-            
-            </CardBody>
-          </Card> 
+          <Col >
+              <h1>
+                {item.count}
+              </h1>
           </Col> 
         </Row>
       
@@ -141,7 +135,6 @@ class App extends React.PureComponent {
   }
 
   async RefreshValue() {
-    this.setState({ count: this.state.count + 1 })
     const url = "http://localhost:8000/api/buttoncounts/"
     const response = await fetch(url)
     const data = await response.json()
@@ -166,12 +159,12 @@ class App extends React.PureComponent {
               `http://localhost:8000/api/buttoncounts/${this.state.ActiveButton.id}/`,
               tempObject
             )
-            .then(this.RefreshValue())
-            .then(this.renderList())
+          
         })
       }
     )
     // window.location.reload()
+    this.RefreshValue()
     this.props.ButtonProp(this.state.Button)
   }
 
@@ -197,10 +190,8 @@ class App extends React.PureComponent {
   }
 }
 
-function mapStateToProps(props, state) {
-  return {
-    DefaultValue: props.DefaultValue + " " + state.NewButton,
-  }
+function mapStateToProps( state) {
+  return state
 }
 
 const mapActionsToProps = {
