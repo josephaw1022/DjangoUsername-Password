@@ -1,1 +1,1 @@
-# DjangoUsername-Password
+# React-Redux-Django
