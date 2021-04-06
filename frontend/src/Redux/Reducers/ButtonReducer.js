@@ -1,4 +1,4 @@
-import { INCREMENT } from "../Actions/ButtonAction.js"
+import { INCREMENT } from "../Actions/ButtonAction.js";
 
 // null is set as the default value here for state, because Redux will complain if state is undefined.
 // You can set initial state here, but it is recommended on the Redux documentation to preload the state within the redux store.
@@ -7,8 +7,8 @@ import { INCREMENT } from "../Actions/ButtonAction.js"
 export default function ButtonReducer(state = [], action) {
   switch (action.type) {
     case INCREMENT:
-      return action.payload.NewButton
+      return action.payload.NewButton;
     default:
-      return state
+      return state;
   }
 }

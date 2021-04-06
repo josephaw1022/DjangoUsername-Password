@@ -1,13 +1,13 @@
-import React from "react"
-import store from "./Redux/Stores/store"
+import React from "react";
+import store from "./Redux/Stores/store";
 
 class Items extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     this.state = {
       items: [],
-    }
+    };
 
     store.subscribe(() => {
       // When state will be updated(in our case, when items will be fetched),
@@ -16,8 +16,8 @@ class Items extends React.Component {
 
       this.setState({
         items: store.getState().items,
-      })
-    })
+      });
+    });
   }
 
   render() {
@@ -27,7 +27,7 @@ class Items extends React.Component {
           <p> {item.title} </p>
         ))}
       </div>
-    )
+    );
   }
 }
-export default Items
+export default Items;

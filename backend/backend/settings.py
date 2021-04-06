@@ -25,7 +25,7 @@ SECRET_KEY = 'ae2u@$b@lo3%f%x4-s97m3)txa77$-$kh1p1q63f@#$(19=dq)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://redux-react-django-joewhiteaker.vercel.app/']
+ALLOWED_HOSTS = []
 
 
 # Application definition
